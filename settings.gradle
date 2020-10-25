@@ -1,0 +1,3 @@
+rootProject.name = 'pocket-notebook-web'
+include 'pn-app'
+include 'pn-ui'
