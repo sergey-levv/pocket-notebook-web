@@ -19,6 +19,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 }
 
 group 'by.liauko.siarhei'
+version "${app_version}"
 
 repositories {
     mavenCentral()
