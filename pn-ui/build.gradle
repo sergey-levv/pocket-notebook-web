@@ -1,1 +1,2 @@
 group 'by.liauko.siarhei'
+version "${app_version}"
