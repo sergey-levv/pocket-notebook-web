@@ -1,22 +1,23 @@
-CREATE TABLE "user" (
+CREATE TABLE credential (
 	id BIGSERIAL PRIMARY KEY NOT NULL,
 	email VARCHAR(50) NOT NULL UNIQUE,
 	password CHARACTER(40) NOT NULL
 );
 
+CREATE TABLE note_type (
+    id BIGSERIAL PRIMARY KEY NOT NULL,
+    type VARCHAR(255) NOT NULL UNIQUE
+);
+
 CREATE TABLE note (
 	id BIGSERIAL PRIMARY KEY NOT NULL,
 	title VARCHAR(255) NOT NULL,
+	text TEXT,
 	created_at TIMESTAMP NOT NULL,
 	updated_at TIMESTAMP NOT NULL,
 	pinned BOOLEAN NOT NULL DEFAULT false,
-	user_id BIGSERIAL NOT NULL references "user"(id)
-);
-
-CREATE TABLE note_text (
-	id BIGSERIAL PRIMARY KEY NOT NULL,
-	text TEXT,
-	note_id BIGSERIAL NOT NULL references note(id)
+	credential_id BIGINT NOT NULL references credential(id),
+	type_id BIGINT NOT NULL references note_type(id)
 );
 
 CREATE TABLE task_group (
@@ -33,8 +34,8 @@ CREATE TABLE task (
 	pinned BOOLEAN NOT NULL DEFAULT false,
 	execute_at TIMESTAMP,
 	notify_at TIMESTAMP,
-	note_id BIGSERIAL NOT NULL references note(id),
-	group_id BIGSERIAL references task_group(id)
+	note_id BIGINT NOT NULL references note(id),
+	group_id BIGINT references task_group(id)
 );
 
 CREATE TABLE set_item (
@@ -43,17 +44,17 @@ CREATE TABLE set_item (
 	created_at TIMESTAMP NOT NULL,
 	updated_at TIMESTAMP NOT NULL,
 	pinned BOOLEAN NOT NULL DEFAULT false,
-	note_id BIGSERIAL NOT NULL references note(id)
+	note_id BIGINT NOT NULL references note(id)
 );
 
-CREATE INDEX note_user_id_idx
-	ON note(user_id);
+CREATE INDEX note_credential_id_idx
+	ON note(credential_id);
+
+CREATE INDEX note_type_id_idx
+    ON note(type_id);
 	
 CREATE INDEX note_title_idx
 	ON note(title);
-	
-CREATE INDEX note_text_note_id_idx
-	ON note_text(note_id);
 	
 CREATE INDEX task_note_id_idx
 	ON task(note_id);
@@ -69,3 +70,12 @@ CREATE INDEX set_item_note_id_idx
 	
 CREATE INDEX set_item_name_idx
 	ON set_item(name);
+
+INSERT INTO note_type (type)
+    VALUES ('TEXT');
+
+INSERT INTO note_type (type)
+    VALUES ('TASK_LIST');
+
+INSERT INTO note_type (type)
+    VALUES ('SET');
