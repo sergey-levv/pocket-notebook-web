@@ -46,14 +46,14 @@ class NoteEntity(
                 typeId: Long,
                 items: MutableSet<SetItemEntity>
         ) : this (title, text, createdAt, updatedAt, pinned, credentialId, typeId) {
-                this.setItems = items
+                this.items = items
         }
 
 
 
         @OneToMany(mappedBy = "note")
-        final lateinit var tasks: MutableList<TaskEntity>
+        lateinit var tasks: MutableList<TaskEntity>
 
         @OneToMany(mappedBy = "note")
-        final lateinit var setItems: MutableSet<SetItemEntity>
+        lateinit var items: MutableSet<SetItemEntity>
 }
