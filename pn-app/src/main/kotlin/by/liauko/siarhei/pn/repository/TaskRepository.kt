@@ -1,24 +1,15 @@
 package by.liauko.siarhei.pn.repository
 
 import by.liauko.siarhei.pn.repository.entity.TaskEntity
-import org.springframework.stereotype.Repository
-import javax.transaction.Transactional
 
-@Repository
-@Transactional
-class TaskRepository : BaseRepository() {
 
-    fun save(task: TaskEntity) =
-            entityManager.persist(task)
+interface TaskRepository {
 
-    fun update(task: TaskEntity) =
-            entityManager.merge(task)
+    fun save(task: TaskEntity)
 
-    fun delete(task: TaskEntity) =
-            entityManager.remove(task)
+    fun update(task: TaskEntity): TaskEntity
 
-    fun findByNoteId(noteId: Long) =
-            entityManager.createQuery("from TaskNote where note_id = :note_id")
-                    .setParameter("note_id", noteId)
-                    .resultList.toList()
+    fun delete(task: TaskEntity)
+
+    fun findByNoteId(noteId: Long): List<TaskEntity>
 }

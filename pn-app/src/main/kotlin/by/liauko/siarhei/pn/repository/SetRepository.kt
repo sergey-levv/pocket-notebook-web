@@ -1,24 +1,15 @@
 package by.liauko.siarhei.pn.repository
 
 import by.liauko.siarhei.pn.repository.entity.SetItemEntity
-import org.springframework.stereotype.Repository
-import javax.transaction.Transactional
 
-@Repository
-@Transactional
-class SetRepository : BaseRepository() {
 
-    fun save(item: SetItemEntity) =
-            entityManager.persist(item)
+interface SetRepository {
 
-    fun update(item: SetItemEntity) =
-            entityManager.merge(item)
+    fun save(item: SetItemEntity)
 
-    fun delete(item: SetItemEntity) =
-            entityManager.remove(item)
+    fun update(item: SetItemEntity): SetItemEntity
 
-    fun findByNoteId(noteId: Long) =
-            entityManager.createQuery("from SetItem where note_id = :note_id")
-                    .setParameter("note_id", noteId)
-                    .resultList.toList()
+    fun delete(item: SetItemEntity)
+
+    fun findByNoteId(noteId: Long): List<SetItemEntity>
 }

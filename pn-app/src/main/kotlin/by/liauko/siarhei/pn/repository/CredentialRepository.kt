@@ -1,26 +1,17 @@
 package by.liauko.siarhei.pn.repository
 
 import by.liauko.siarhei.pn.repository.entity.CredentialEntity
-import org.springframework.stereotype.Repository
-import javax.transaction.Transactional
 
-@Repository
-@Transactional
-class CredentialRepository : BaseRepository() {
 
-    fun findById(id: Long) =
-            entityManager.find(CredentialEntity::class.java, id)
+interface CredentialRepository {
 
-    fun findPasswordByEmail(email: String) =
-            entityManager.createQuery("select password from Credential where email = '$email'")
-                .singleResult
+    fun save(credential: CredentialEntity)
 
-    fun save(credential: CredentialEntity) =
-            entityManager.persist(credential)
+    fun update(credential: CredentialEntity): CredentialEntity
 
-    fun update(credential: CredentialEntity) =
-            entityManager.merge(credential)
+    fun delete(credential: CredentialEntity)
 
-    fun delete(credential: CredentialEntity) =
-            entityManager.remove(credential)
+    fun findById(id: Long): CredentialEntity
+
+    fun findPasswordByEmail(email: String): String
 }
