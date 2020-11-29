@@ -1,0 +1,32 @@
+plugins {
+    id 'org.liquibase.gradle' version "${liquibase_gradle_version}"
+}
+
+group 'by.liauko.siarhei'
+version "${app_version}"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    liquibaseRuntime "org.liquibase:liquibase-core:${liquibase_core_version}"
+    liquibaseRuntime "org.postgresql:postgresql:${postgresql_version}"
+}
+
+def changelog = "/pn-deploy/src/main/resources/changelog/db.changelog-master.xml"
+
+task('liquibase') {
+    println('Run liquibase scripts for database')
+
+    liquibase {
+        activities {
+            main() {
+                changelogFile changelog
+                url dbUrl
+                username dbUsername
+                password dbPassword
+            }
+        }
+    }
+}

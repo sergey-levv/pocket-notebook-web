@@ -47,6 +47,9 @@ CREATE TABLE set_item (
 	note_id BIGINT NOT NULL references note(id)
 );
 
+CREATE INDEX credential_email_idx
+    ON credential(email);
+
 CREATE INDEX note_credential_id_idx
 	ON note(credential_id);
 
@@ -64,6 +67,9 @@ CREATE INDEX task_title_idx
 	
 CREATE INDEX task_execute_at_idx
 	ON task(execute_at);
+
+CREATE INDEX task_group_id_idx
+    ON task(group_id);
 	
 CREATE INDEX set_item_note_id_idx
 	ON set_item(note_id);

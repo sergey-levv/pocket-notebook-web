@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="PN-8-create-tables" author="Siarhei Liauko">
+        <comment>Create basic tables and references between them</comment>
+
+        <createTable tableName="credential">
+            <column name="id" type="BIGSERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="email" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true" />
+            </column>
+            <column name="password" type="VARCHAR(40)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createTable tableName="note_type">
+            <column name="id" type="BIGSERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="type" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true" />
+            </column>
+        </createTable>
+
+        <createTable tableName="note">
+            <column name="id" type="BIGSERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="text" type="TEXT" />
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false" />
+            </column>
+            <column name="updated_at" type="TIMESTAMP">
+                <constraints nullable="false" />
+            </column>
+            <column name="pinned" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false" />
+            </column>
+            <column name="credential_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_note_credential" references="credential(id)" />
+            </column>
+            <column name="type_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_note_type" references="note_type(id)" />
+            </column>
+        </createTable>
+
+        <createTable tableName="task_group">
+            <column name="id" type="BIGSERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createTable tableName="task">
+            <column name="id" type="BIGSERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="title" type="TEXT">
+                <constraints nullable="false" />
+            </column>
+            <column name="description" type="TEXT">
+                <constraints nullable="true" />
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false" />
+            </column>
+            <column name="updated_at" type="TIMESTAMP">
+                <constraints nullable="false" />
+            </column>
+            <column name="pinned" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false" />
+            </column>
+            <column name="execute_at" type="TIMESTAMP">
+                <constraints nullable="true" />
+            </column>
+            <column name="notify_at" type="TIMESTAMP">
+                <constraints nullable="true" />
+            </column>
+            <column name="note_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_task_note" references="note(id)" />
+            </column>
+            <column name="group_id" type="BIGINT">
+                <constraints nullable="true" foreignKeyName="fk_task_group" references="task_group(id)" />
+            </column>
+        </createTable>
+
+        <createTable tableName="set_item">
+            <column name="id" type="BIGSERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="TEXT">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false" />
+            </column>
+            <column name="updated_at" type="TIMESTAMP">
+                <constraints nullable="false" />
+            </column>
+            <column name="pinned" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false" />
+            </column>
+            <column name="note_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_task_note" references="note(id)" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="PN-8-create-indexes" author="Siarhei Liauko">
+        <comment>Create indexes for tables</comment>
+
+        <createIndex indexName="idx_credential_email" tableName="credential">
+            <column name="email" />
+        </createIndex>
+
+        <createIndex indexName="idx_note_credential_id" tableName="note">
+            <column name="credential_id" />
+        </createIndex>
+        <createIndex indexName="idx_note_type_id" tableName="note">
+            <column name="type_id" />
+        </createIndex>
+        <createIndex indexName="idx_note_title" tableName="note">
+            <column name="title" />
+        </createIndex>
+
+        <createIndex indexName="idx_task_note_id" tableName="task">
+            <column name="note_id" />
+        </createIndex>
+        <createIndex indexName="idx_task_title" tableName="task">
+            <column name="title" />
+        </createIndex>
+        <createIndex indexName="idx_task_execute_at" tableName="task">
+            <column name="execute_at" />
+        </createIndex>
+        <createIndex indexName="idx_task_group_id" tableName="task">
+            <column name="group_id" />
+        </createIndex>
+
+        <createIndex indexName="idx_set_item_note_id" tableName="set_item">
+            <column name="note_id" />
+        </createIndex>
+        <createIndex indexName="idx_set_item_name" tableName="set_item">
+            <column name="name" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="PN-8-insert-default-note-types" author="Siarhei Liauko">
+        <comment>Insert default note types</comment>
+
+        <insert tableName="note_type">
+            <column name="type" value="TEXT" />
+        </insert>
+        <insert tableName="note_type">
+            <column name="type" value="TASK_LIST" />
+        </insert>
+        <insert tableName="note_type">
+            <column name="type" value="SET" />
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
