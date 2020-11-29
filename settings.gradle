@@ -1,3 +1,6 @@
 rootProject.name = 'pocket-notebook-web'
 include 'pn-app'
 include 'pn-ui'
+include 'pn-deploy'
+
+startParameter.excludedTaskNames=["liquibase"]
