@@ -1,4 +1,4 @@
-package by.liauko.siarhei.pn.repository.postgres
+package by.liauko.siarhei.pn.repository.hibernate
 
 import by.liauko.siarhei.pn.repository.BaseRepository
 import by.liauko.siarhei.pn.repository.SetRepository
@@ -6,9 +6,18 @@ import by.liauko.siarhei.pn.repository.entity.SetItemEntity
 import org.springframework.stereotype.Repository
 import javax.transaction.Transactional
 
+
+/**
+ * [SetRepository] implementation using Hibernate API.
+ *
+ * @see BaseRepository
+ * @see SetRepository
+ * @author Siarhei Liauko
+ * @since 1.0.0
+ */
 @Repository
 @Transactional
-class PostgresSetRepository : BaseRepository(), SetRepository {
+class HibernateSetRepository : BaseRepository(), SetRepository {
 
     private val selectItemsByNoteId = "from SetItem where note_id = :note_id"
 

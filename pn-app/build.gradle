@@ -4,6 +4,7 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.jpa' version "${kotlin_version}"
     id 'org.springframework.boot' version "${spring_version}"
     id 'io.spring.dependency-management' version "${spring_dependency_management_version}"
+    id 'org.jetbrains.dokka' version "${dokka_version}"
 }
 
 allOpen {
@@ -39,6 +40,8 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+
+    dokkaHtmlPlugin 'org.jetbrains.dokka:kotlin-as-java-plugin:1.4.10.2'
 }
 
 test {

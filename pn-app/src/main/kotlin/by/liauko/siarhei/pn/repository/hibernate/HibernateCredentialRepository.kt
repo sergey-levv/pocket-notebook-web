@@ -1,4 +1,4 @@
-package by.liauko.siarhei.pn.repository.postgres
+package by.liauko.siarhei.pn.repository.hibernate
 
 import by.liauko.siarhei.pn.repository.BaseRepository
 import by.liauko.siarhei.pn.repository.CredentialRepository
@@ -6,9 +6,18 @@ import by.liauko.siarhei.pn.repository.entity.CredentialEntity
 import org.springframework.stereotype.Repository
 import javax.transaction.Transactional
 
+
+/**
+ * [CredentialRepository] implementation using Hibernate API.
+ *
+ * @see BaseRepository
+ * @see CredentialRepository
+ * @author Siarhei Liauko
+ * @since 1.0.0
+ */
 @Repository
 @Transactional
-class PostgresCredentialRepository : BaseRepository(), CredentialRepository {
+class HibernateCredentialRepository : BaseRepository(), CredentialRepository {
 
     private val selectPasswordByEmail = "select password from Credential where email = :email"
 
