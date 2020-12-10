@@ -1,4 +1,4 @@
-package by.liauko.siarhei.pn.repository.postgres
+package by.liauko.siarhei.pn.repository.hibernate
 
 import by.liauko.siarhei.pn.repository.BaseRepository
 import by.liauko.siarhei.pn.repository.TaskRepository
@@ -6,9 +6,18 @@ import by.liauko.siarhei.pn.repository.entity.TaskEntity
 import org.springframework.stereotype.Repository
 import javax.transaction.Transactional
 
+
+/**
+ * [TaskRepository] implementation using Hibernate API.
+ *
+ * @see BaseRepository
+ * @see TaskRepository
+ * @author Siarhei Liauko
+ * @since 1.0.0
+ */
 @Repository
 @Transactional
-class PostgresTaskRepository : BaseRepository(), TaskRepository {
+class HibernateTaskRepository : BaseRepository(), TaskRepository {
 
     private val selectTasksByNoteId = "from TaskNote where note_id = :note_id"
 

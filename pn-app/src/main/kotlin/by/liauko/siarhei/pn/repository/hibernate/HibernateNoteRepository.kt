@@ -1,4 +1,4 @@
-package by.liauko.siarhei.pn.repository.postgres
+package by.liauko.siarhei.pn.repository.hibernate
 
 import by.liauko.siarhei.pn.repository.BaseRepository
 import by.liauko.siarhei.pn.repository.NoteRepository
@@ -6,9 +6,18 @@ import by.liauko.siarhei.pn.repository.entity.NoteEntity
 import org.springframework.stereotype.Repository
 import javax.transaction.Transactional
 
+
+/**
+ * [NoteRepository] implementation using Hibernate API.
+ *
+ * @see BaseRepository
+ * @see NoteRepository
+ * @author Siarhei Liauko
+ * @since 1.0.0
+ */
 @Repository
 @Transactional
-class PostgresNoteRepository : BaseRepository(), NoteRepository {
+class HibernateNoteRepository : BaseRepository(), NoteRepository {
 
     private val selectUserNotesByType = "from Note where credential_id = :cred_id and type_id = :type_id"
 
