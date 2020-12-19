@@ -58,9 +58,21 @@ interface CredentialRepository {
     fun findById(id: Long): CredentialEntity
 
     /**
+     * Find user credentials by it email in database.
+     *
+     * @param email - user's email identifying the credentials which data is returned.
+     *
+     * @return [CredentialEntity] related to email.
+     *
+     * @author Siarhei Liauko
+     * @since 1.0.0
+     */
+    fun findByEmail(email: String): CredentialEntity
+
+    /**
      * Find password by email related to it.
      *
-     * @param email - user email related to password.
+     * @param email - user's email related to password.
      *
      * @return password value
      *

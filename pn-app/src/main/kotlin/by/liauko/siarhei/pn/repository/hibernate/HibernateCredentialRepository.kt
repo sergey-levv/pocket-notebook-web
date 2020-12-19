@@ -20,6 +20,7 @@ import javax.transaction.Transactional
 class HibernateCredentialRepository : BaseRepository(), CredentialRepository {
 
     private val selectPasswordByEmail = "select password from Credential where email = :email"
+    private val selectByEmail = "from Credential where email = :email"
 
     private val emailParameterName = "email"
 
@@ -34,6 +35,11 @@ class HibernateCredentialRepository : BaseRepository(), CredentialRepository {
 
     override fun findById(id: Long): CredentialEntity =
             entityManager.find(CredentialEntity::class.java, id)
+
+    override fun findByEmail(email: String): CredentialEntity =
+            entityManager.createQuery(selectByEmail, CredentialEntity::class.java)
+                    .setParameter(emailParameterName, email)
+                    .singleResult
 
     override fun findPasswordByEmail(email: String): String =
             entityManager.createQuery(selectPasswordByEmail, String::class.java)
