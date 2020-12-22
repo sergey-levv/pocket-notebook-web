@@ -29,6 +29,7 @@ repositories {
 
 dependencies {
     def jwt_version = '3.12.0'
+    def log4j_version = '2.14.0'
     def dokka_version = '1.4.10.2'
 
     implementation 'org.jetbrains.kotlin:kotlin-stdlib'
@@ -40,6 +41,7 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 
     compile "com.auth0:java-jwt:$jwt_version"
+    compile "org.apache.logging.log4j:log4j-core:$log4j_version"
 
     runtimeOnly 'org.postgresql:postgresql'
 

@@ -13,7 +13,7 @@ import by.liauko.siarhei.pn.repository.entity.CredentialEntity
 interface CredentialRepository {
 
     /**
-     * Save user credentials to database. [CredentialEntity.password] value is PBKDF2 function result
+     * Saves user credentials to database. [CredentialEntity.password] value is PBKDF2 function result
      * which length is 44 characters.
      *
      * @param credential - [CredentialEntity] instance which stored user email and password.
@@ -24,7 +24,7 @@ interface CredentialRepository {
     fun save(credential: CredentialEntity)
 
     /**
-     * Update user credentials.
+     * Updates user credentials.
      *
      * @param credential - [CredentialEntity] which contains updated user credentials information.
      *
@@ -36,7 +36,7 @@ interface CredentialRepository {
     fun update(credential: CredentialEntity): CredentialEntity
 
     /**
-     * Remove user credentials from database.
+     * Removes user credentials from database.
      *
      * @param credential - user credentials which will be deleted.
      *
@@ -46,7 +46,7 @@ interface CredentialRepository {
     fun delete(credential: CredentialEntity)
 
     /**
-     * Find user credentials by it ID in database.
+     * Finds user credentials by it ID in database.
      *
      * @param id - credentials unique identifier.
      *
@@ -58,7 +58,7 @@ interface CredentialRepository {
     fun findById(id: Long): CredentialEntity
 
     /**
-     * Find user credentials by it email in database.
+     * Finds user credentials by it email in database.
      *
      * @param email - user's email identifying the credentials which data is returned.
      *
@@ -70,14 +70,14 @@ interface CredentialRepository {
     fun findByEmail(email: String): CredentialEntity
 
     /**
-     * Find password by email related to it.
+     * Checks if certain email already exists in database.
      *
-     * @param email - user's email related to password.
+     * @param email - the email address which comparing with data in database.
      *
-     * @return password value
+     * @return true if such email exists in database, otherwise false.
      *
      * @author Siarhei Liauko
      * @since 1.0.0
      */
-    fun findPasswordByEmail(email: String): String
+    fun isEmailExist(email: String): Boolean
 }

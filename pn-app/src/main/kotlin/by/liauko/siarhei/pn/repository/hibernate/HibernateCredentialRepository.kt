@@ -19,8 +19,8 @@ import javax.transaction.Transactional
 @Transactional
 class HibernateCredentialRepository : BaseRepository(), CredentialRepository {
 
-    private val selectPasswordByEmail = "select password from Credential where email = :email"
     private val selectByEmail = "from Credential where email = :email"
+    private val countEmail = "select count(1) from Credential where email = :email"
 
     private val emailParameterName = "email"
 
@@ -41,8 +41,8 @@ class HibernateCredentialRepository : BaseRepository(), CredentialRepository {
                     .setParameter(emailParameterName, email)
                     .singleResult
 
-    override fun findPasswordByEmail(email: String): String =
-            entityManager.createQuery(selectPasswordByEmail, String::class.java)
+    override fun isEmailExist(email: String): Boolean =
+            entityManager.createQuery(countEmail, Long::class.javaObjectType)
                     .setParameter(emailParameterName, email)
-                    .singleResult
+                    .singleResult > 0
 }
