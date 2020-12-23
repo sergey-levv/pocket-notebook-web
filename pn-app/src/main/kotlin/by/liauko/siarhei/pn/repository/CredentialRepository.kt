@@ -14,7 +14,7 @@ interface CredentialRepository {
 
     /**
      * Saves user credentials to database. [CredentialEntity.password] value is PBKDF2 function result
-     * which length is 44 characters.
+     * which length is 80 characters.
      *
      * @param credential - [CredentialEntity] instance which stored user email and password.
      *
@@ -80,4 +80,38 @@ interface CredentialRepository {
      * @since 1.0.0
      */
     fun isEmailExist(email: String): Boolean
+
+    /**
+     * Update user's credentials status to deactivated.
+     *
+     * @param id - unique identifier determining user's credentials which will be deactivated.
+     * @param time - date and time when credential was deactivated in milliseconds.
+     *
+     * @author Siarhei Liauko
+     * @since 1.0.0
+     */
+    fun deactivateCredential(id: Long, time: Long)
+
+    /**
+     * Returns password related to specified ID.
+     *
+     * @param id - unique identifier of user's credential.
+     *
+     * @return user's password.
+     *
+     * @author Siarhei Liauko
+     * @since 1.0.0
+     */
+    fun findPasswordById(id: Long): String
+
+    /**
+     * Updated user's password in database.
+     *
+     * @param id - unique identifier determining user's credentials which password will be updated.
+     * @param password - new user's password value.
+     *
+     * @author Siarhei Liauko
+     * @since 1.0.0
+     */
+    fun updatePassword(id: Long, password: String)
 }

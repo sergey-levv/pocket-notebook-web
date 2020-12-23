@@ -1,6 +1,8 @@
 package by.liauko.siarhei.pn.service
 
 import by.liauko.siarhei.pn.dto.Account
+import by.liauko.siarhei.pn.dto.Credential
+import by.liauko.siarhei.pn.dto.NewPassword
 import org.springframework.security.core.userdetails.UserDetailsService
 
 
@@ -16,12 +18,12 @@ interface AccountService : UserDetailsService {
     /**
      * Save user's credentials.
      *
-     * @param account - [Account] instance containing account username and password.
+     * @param credential - [Credential] instance containing account username and password.
      *
      * @author Siarhei Liauko
      * @since 1.0.0
      */
-    fun createAccount(account: Account): Long?
+    fun createAccount(credential: Credential): Long?
 
     /**
      * Return account details by username related to it.
@@ -34,4 +36,25 @@ interface AccountService : UserDetailsService {
      * @since 1.0.0
      */
     fun getAccountDetails(username: String): Account
+
+    /**
+     * Updating user's password after verification.
+     *
+     * @param newPassword - [NewPassword] instance containing account ID,
+     * old password for verification and new password.
+     *
+     * @author Siarhei Liauko
+     * @since 1.0.0
+     */
+    fun updatePassword(newPassword: NewPassword)
+
+    /**
+     * Deactivates user's account when user want remove their account from application.
+     *
+     * @param account - user's account which should be deactivated and contains user's id and password to verification.
+     *
+     * @author Siarhei Liauko
+     * @since 1.0.0
+     */
+    fun deactivateAccount(account: Account)
 }
