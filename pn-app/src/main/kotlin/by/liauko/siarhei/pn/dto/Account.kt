@@ -2,7 +2,7 @@ package by.liauko.siarhei.pn.dto
 
 
 /**
- * Data transfer object containing data about user's credentials
+ * Data transfer object containing data about user's account
  *
  * @author Siarhei Liauko
  * @since 1.0.0
@@ -11,7 +11,7 @@ data class Account(
         /**
          * User credentials unique identifier.
          */
-        val id: Long?,
+        val id: Long,
         /**
          * User's email which used as username.
          */
@@ -19,5 +19,9 @@ data class Account(
         /**
          * User's password.
          */
-        var password: String
+        var password: String,
+        /**
+         * Flag determining if user account activated
+         */
+        val isActive: Boolean
 )

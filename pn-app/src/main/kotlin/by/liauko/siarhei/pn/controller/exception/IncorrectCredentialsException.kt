@@ -1,15 +1,17 @@
-package by.liauko.siarhei.pn.service.exception
+package by.liauko.siarhei.pn.controller.exception
 
-import java.lang.RuntimeException
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.ResponseStatus
 
 
 /**
- * Exception class intended for notifying controller layer, that user with such username already exists in application.
+ * Exception class intended for notifying, that user's username or password is incorrect.
  *
  * @author Siarhei Liauko
  * @since 1.0.0
  */
-class AccountAlreadyExistsException : RuntimeException {
+@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+class IncorrectCredentialsException : RuntimeException {
 
     constructor(): super()
     constructor(message: String): super(message)

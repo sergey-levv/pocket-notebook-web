@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="PN-8-create-tables" author="Siarhei Liauko">
+    <changeSet id="PN-8-create-tables" author="siarhei.liauko">
         <comment>Create basic tables and references between them</comment>
 
         <createTable tableName="credential">
@@ -118,7 +118,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="PN-8-create-indexes" author="Siarhei Liauko">
+    <changeSet id="PN-8-create-indexes" author="siarhei.liauko">
         <comment>Create indexes for tables</comment>
 
         <createIndex indexName="idx_credential_email" tableName="credential">
@@ -156,7 +156,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="PN-8-insert-default-note-types" author="Siarhei Liauko">
+    <changeSet id="PN-8-insert-default-note-types" author="siarhei.liauko">
         <comment>Insert default note types</comment>
 
         <insert tableName="note_type">
@@ -168,6 +168,27 @@
         <insert tableName="note_type">
             <column name="type" value="SET" />
         </insert>
+    </changeSet>
+    
+    <changeSet id="PN-9-update-credential-table" author="siarhei.liauko">
+        <comment>Add is_active and deactivation_date columns to credential table</comment>
+
+        <addColumn tableName="credential">
+            <column name="is_active" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false" />
+            </column>
+            <column name="deactivation_date" type="TIMESTAMP">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="PN-9-add-index-to-is_active-column" author="siarhei.liauko">
+        <comment>Add index to is_active column in credential table</comment>
+
+        <createIndex indexName="idx_credential_is_active" tableName="credential">
+            <column name="is_active" />
+        </createIndex>
     </changeSet>
 
 </databaseChangeLog>

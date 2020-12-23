@@ -1,15 +1,13 @@
 package by.liauko.siarhei.pn.service.exception
 
-import java.lang.RuntimeException
-
 
 /**
- * Exception class intended for notifying controller layer, that user with such username already exists in application.
+ * Exception class intended for notifying controller layer, that username or password is wrong.
  *
  * @author Siarhei Liauko
  * @since 1.0.0
  */
-class AccountAlreadyExistsException : RuntimeException {
+class CredentialsVerificationException : RuntimeException {
 
     constructor(): super()
     constructor(message: String): super(message)
