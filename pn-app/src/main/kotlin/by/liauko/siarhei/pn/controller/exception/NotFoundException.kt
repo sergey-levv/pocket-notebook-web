@@ -1,13 +1,17 @@
-package by.liauko.siarhei.pn.service.exception
+package by.liauko.siarhei.pn.controller.exception
+
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.ResponseStatus
 
 
 /**
- * Exception class intended for notifying controller layer, that username or password is wrong.
+ * Exception class intended for notifying, that resource was not found.
  *
  * @author Siarhei Liauko
  * @since 1.0.0
  */
-class CredentialsVerificationException : RuntimeException {
+@ResponseStatus(HttpStatus.NOT_FOUND)
+class NotFoundException: RuntimeException {
 
     constructor(): super()
     constructor(message: String): super(message)

@@ -1,17 +1,13 @@
-package by.liauko.siarhei.pn.controller.exception
-
-import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.ResponseStatus
+package by.liauko.siarhei.pn.service.exception
 
 
 /**
- * Exception class intended for notifying, that user's username or password is incorrect.
+ * Exception class intended for notifying controller layer, that account was not found in database.
  *
  * @author Siarhei Liauko
  * @since 1.0.0
  */
-@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-class IncorrectCredentialsException : RuntimeException {
+class AccountNotFoundException: RuntimeException {
 
     constructor(): super()
     constructor(message: String): super(message)

@@ -26,6 +26,7 @@ class HibernateCredentialRepository : BaseRepository(), CredentialRepository {
             "set isActive = :value, deactivationDate = :date where id = :id"
     private val selectPasswordById = "select password from Credential where id = :id"
     private val updatePassword = "update Credential set password = :password where id = :id"
+    private val checkCredentialsStatus = "select count(1) from Credential where id = :id and isActive = true"
 
     private val emailParameterName = "email"
     private val idParameterName = "id"
@@ -42,7 +43,7 @@ class HibernateCredentialRepository : BaseRepository(), CredentialRepository {
     override fun delete(credential: CredentialEntity) =
             entityManager.remove(credential)
 
-    override fun findById(id: Long): CredentialEntity =
+    override fun findById(id: Long): CredentialEntity? =
             entityManager.find(CredentialEntity::class.java, id)
 
     override fun findByEmail(email: String): CredentialEntity =
@@ -50,28 +51,21 @@ class HibernateCredentialRepository : BaseRepository(), CredentialRepository {
                     .setParameter(emailParameterName, email)
                     .singleResult
 
-    override fun isEmailExist(email: String): Boolean =
+    override fun isEmailExist(email: String) =
             entityManager.createQuery(countEmail, Long::class.javaObjectType)
                     .setParameter(emailParameterName, email)
                     .singleResult > 0
 
-    override fun deactivateCredential(id: Long, time: Long) {
-        entityManager.createQuery(updateIsActiveAndDeactivationDateValue)
-                .setParameter(valueParameterName, false)
-                .setParameter(dateParameterName, Timestamp(time))
-                .setParameter(idParameterName, id)
-                .executeUpdate()
-    }
-
-    override fun findPasswordById(id: Long): String =
-            entityManager.createQuery(selectPasswordById, String::class.java)
+    override fun deactivateCredential(id: Long, time: Long) =
+            entityManager.createQuery(updateIsActiveAndDeactivationDateValue)
+                    .setParameter(valueParameterName, false)
+                    .setParameter(dateParameterName, Timestamp(time))
                     .setParameter(idParameterName, id)
-                    .singleResult
+                    .executeUpdate()
 
-    override fun updatePassword(id: Long, password: String) {
-        entityManager.createQuery(updatePassword)
-                .setParameter(passwordParameterName, password)
-                .setParameter(idParameterName, id)
-                .executeUpdate()
-    }
+    override fun updatePassword(id: Long, password: String) =
+            entityManager.createQuery(updatePassword)
+                    .setParameter(passwordParameterName, password)
+                    .setParameter(idParameterName, id)
+                    .executeUpdate()
 }
