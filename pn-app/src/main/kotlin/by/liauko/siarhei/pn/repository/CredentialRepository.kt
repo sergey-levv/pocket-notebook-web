@@ -1,6 +1,7 @@
 package by.liauko.siarhei.pn.repository
 
 import by.liauko.siarhei.pn.repository.entity.CredentialEntity
+import java.util.*
 
 
 /**
@@ -55,7 +56,7 @@ interface CredentialRepository {
      * @author Siarhei Liauko
      * @since 1.0.0
      */
-    fun findById(id: Long): CredentialEntity?
+    fun findById(id: UUID): CredentialEntity?
 
     /**
      * Finds user credentials by it email in database.
@@ -92,7 +93,7 @@ interface CredentialRepository {
      * @author Siarhei Liauko
      * @since 1.0.0
      */
-    fun deactivateCredential(id: Long, time: Long): Int
+    fun deactivateCredential(id: UUID, time: Long): Int
 
     /**
      * Updates user's password in database.
@@ -105,5 +106,5 @@ interface CredentialRepository {
      * @author Siarhei Liauko
      * @since 1.0.0
      */
-    fun updatePassword(id: Long, password: String): Int
+    fun updatePassword(id: UUID, password: String): Int
 }

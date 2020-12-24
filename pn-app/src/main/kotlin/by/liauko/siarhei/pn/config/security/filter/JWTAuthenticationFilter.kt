@@ -1,10 +1,10 @@
 package by.liauko.siarhei.pn.config.security.filter
 
 import by.liauko.siarhei.pn.config.security.AUTH_HEADER
-import by.liauko.siarhei.pn.config.security.TOKEN_PREFIX
 import by.liauko.siarhei.pn.config.security.SIGN_IN_URL
 import by.liauko.siarhei.pn.config.security.TOKEN_EXPIRATION_TIME
-import by.liauko.siarhei.pn.dto.Account
+import by.liauko.siarhei.pn.config.security.TOKEN_PREFIX
+import by.liauko.siarhei.pn.dto.Credential
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -58,7 +58,7 @@ class JWTAuthenticationFilter(
      * @since 1.0.0
      */
     override fun attemptAuthentication(request: HttpServletRequest, response: HttpServletResponse): Authentication {
-        val accountDetails = objectMapper.readValue(request.inputStream, Account::class.java)
+        val accountDetails = objectMapper.readValue(request.inputStream, Credential::class.java)
 
         return authManager.authenticate(
                 UsernamePasswordAuthenticationToken(

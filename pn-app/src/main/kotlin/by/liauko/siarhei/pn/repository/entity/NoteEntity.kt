@@ -59,7 +59,7 @@ class NoteEntity(
          */
         @JoinColumn(name = "id", table = "note_type")
         var typeId: Long
-) : BaseEntity<Long>() {
+) : BaseEntity() {
 
         /**
          * Constructor which creates note with task list.

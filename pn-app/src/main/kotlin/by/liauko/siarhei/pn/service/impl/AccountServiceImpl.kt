@@ -7,7 +7,6 @@ import by.liauko.siarhei.pn.repository.CredentialRepository
 import by.liauko.siarhei.pn.repository.entity.CredentialEntity
 import by.liauko.siarhei.pn.service.AccountService
 import by.liauko.siarhei.pn.service.exception.AccountAlreadyExistsException
-import by.liauko.siarhei.pn.service.exception.AccountNotActiveException
 import by.liauko.siarhei.pn.service.exception.AccountNotFoundException
 import org.apache.logging.log4j.LogManager
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder
 import org.springframework.stereotype.Service
+import java.util.*
 import javax.persistence.NoResultException
 
 
@@ -35,7 +35,7 @@ class AccountServiceImpl : AccountService {
     @Autowired
     private lateinit var credentialRepository: CredentialRepository
 
-    override fun createAccount(credential: Credential): Long? {
+    override fun createAccount(credential: Credential): UUID? {
         if (credentialRepository.isEmailExist(credential.username)) {
             log.warn("Account with email ${credential.username} already exist in database")
             throw AccountAlreadyExistsException("Account with email ${credential.username} already exist in database")
@@ -70,7 +70,7 @@ class AccountServiceImpl : AccountService {
         }
     }
 
-    override fun deactivateAccount(id: Long) {
+    override fun deactivateAccount(id: UUID) {
         if (credentialRepository.deactivateCredential(id, System.currentTimeMillis()) == 0) {
             log.warn("Account with id $id does not exists.")
             throw AccountNotFoundException("Account with id $id does not exists.")

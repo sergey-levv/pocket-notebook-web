@@ -1,5 +1,7 @@
 package by.liauko.siarhei.pn.dto
 
+import java.util.*
+
 
 /**
  * Data transfer object containing data about user's account unique identifier and new password.
@@ -11,7 +13,7 @@ data class Password (
         /**
          * User's account unique identifier.
          */
-        val id: Long,
+        val id: UUID,
         /**
          * User's new password.
          */

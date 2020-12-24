@@ -18,4 +18,4 @@ class TaskGroupEntity (
          * Group name.
          */
         val name: String
-) : BaseEntity<Long>()
+) : BaseEntity()
