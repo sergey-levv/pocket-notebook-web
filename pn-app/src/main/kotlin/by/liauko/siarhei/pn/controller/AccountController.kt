@@ -1,13 +1,11 @@
 package by.liauko.siarhei.pn.controller
 
-import by.liauko.siarhei.pn.controller.exception.IncorrectDataException
 import by.liauko.siarhei.pn.controller.exception.NotFoundException
 import by.liauko.siarhei.pn.controller.exception.UsernameAlreadyExistsException
 import by.liauko.siarhei.pn.dto.Credential
 import by.liauko.siarhei.pn.dto.Password
 import by.liauko.siarhei.pn.service.AccountService
 import by.liauko.siarhei.pn.service.exception.AccountAlreadyExistsException
-import by.liauko.siarhei.pn.service.exception.AccountNotActiveException
 import by.liauko.siarhei.pn.service.exception.AccountNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PathVariable
@@ -49,8 +47,6 @@ class AccountController {
             accountService.updatePassword(password)
         } catch (e: AccountNotFoundException) {
             throw NotFoundException(e)
-        } catch (e: AccountNotActiveException) {
-            throw IncorrectDataException(e)
         }
     }
 }
