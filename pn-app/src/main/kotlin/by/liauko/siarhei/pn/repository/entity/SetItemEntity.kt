@@ -49,4 +49,4 @@ class SetItemEntity (
         @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
         @JoinColumn(name = "note_id")
         var note: NoteEntity?
-) : BaseEntity<Long>()
+) : BaseEntity()

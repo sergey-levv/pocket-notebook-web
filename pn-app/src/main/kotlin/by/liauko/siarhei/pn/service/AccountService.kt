@@ -4,6 +4,7 @@ import by.liauko.siarhei.pn.dto.Account
 import by.liauko.siarhei.pn.dto.Credential
 import by.liauko.siarhei.pn.dto.Password
 import org.springframework.security.core.userdetails.UserDetailsService
+import java.util.*
 
 
 /**
@@ -20,10 +21,12 @@ interface AccountService : UserDetailsService {
      *
      * @param credential [Credential] instance containing account username and password.
      *
+     * @return account unique identifier in UUID format.
+     *
      * @author Siarhei Liauko
      * @since 1.0.0
      */
-    fun createAccount(credential: Credential): Long?
+    fun createAccount(credential: Credential): UUID?
 
     /**
      * Return account details by username related to it.
@@ -50,10 +53,10 @@ interface AccountService : UserDetailsService {
     /**
      * Deactivates user's account when user want remove their account from application.
      *
-     * @param id unique identifier related to user's account to be deactivated.
+     * @param id unique identifier in UUID format related to user's account to be deactivated.
      *
      * @author Siarhei Liauko
      * @since 1.0.0
      */
-    fun deactivateAccount(id: Long)
+    fun deactivateAccount(id: UUID)
 }

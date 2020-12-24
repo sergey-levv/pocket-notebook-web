@@ -9,7 +9,7 @@
         <comment>Create basic tables and references between them</comment>
 
         <createTable tableName="credential">
-            <column name="id" type="BIGSERIAL" autoIncrement="true">
+            <column name="id" type="UUID" defaultValue="gen_random_uuid()">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="email" type="VARCHAR(50)">
@@ -21,7 +21,7 @@
         </createTable>
 
         <createTable tableName="note_type">
-            <column name="id" type="BIGSERIAL" autoIncrement="true">
+            <column name="id" type="UUID" defaultValue="gen_random_uuid()">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="type" type="VARCHAR(255)">
@@ -30,7 +30,7 @@
         </createTable>
 
         <createTable tableName="note">
-            <column name="id" type="BIGSERIAL" autoIncrement="true">
+            <column name="id" type="UUID" defaultValue="gen_random_uuid()">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="title" type="VARCHAR(255)">
@@ -46,16 +46,16 @@
             <column name="pinned" type="BOOLEAN" defaultValueBoolean="false">
                 <constraints nullable="false" />
             </column>
-            <column name="credential_id" type="BIGINT">
+            <column name="credential_id" type="UUID">
                 <constraints nullable="false" foreignKeyName="fk_note_credential" references="credential(id)" />
             </column>
-            <column name="type_id" type="BIGINT">
+            <column name="type_id" type="UUID">
                 <constraints nullable="false" foreignKeyName="fk_note_type" references="note_type(id)" />
             </column>
         </createTable>
 
         <createTable tableName="task_group">
-            <column name="id" type="BIGSERIAL" autoIncrement="true">
+            <column name="id" type="UUID" defaultValue="gen_random_uuid()">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="name" type="VARCHAR(255)">
@@ -64,7 +64,7 @@
         </createTable>
 
         <createTable tableName="task">
-            <column name="id" type="BIGSERIAL" autoIncrement="true">
+            <column name="id" type="UUID" defaultValue="gen_random_uuid()">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="title" type="TEXT">
@@ -88,16 +88,16 @@
             <column name="notify_at" type="TIMESTAMP">
                 <constraints nullable="true" />
             </column>
-            <column name="note_id" type="BIGINT">
+            <column name="note_id" type="UUID">
                 <constraints nullable="false" foreignKeyName="fk_task_note" references="note(id)" />
             </column>
-            <column name="group_id" type="BIGINT">
+            <column name="group_id" type="UUID">
                 <constraints nullable="true" foreignKeyName="fk_task_group" references="task_group(id)" />
             </column>
         </createTable>
 
         <createTable tableName="set_item">
-            <column name="id" type="BIGSERIAL" autoIncrement="true">
+            <column name="id" type="UUID" defaultValue="gen_random_uuid()">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="name" type="TEXT">
@@ -112,7 +112,7 @@
             <column name="pinned" type="BOOLEAN" defaultValueBoolean="false">
                 <constraints nullable="false" />
             </column>
-            <column name="note_id" type="BIGINT">
+            <column name="note_id" type="UUID">
                 <constraints nullable="false" foreignKeyName="fk_task_note" references="note(id)" />
             </column>
         </createTable>

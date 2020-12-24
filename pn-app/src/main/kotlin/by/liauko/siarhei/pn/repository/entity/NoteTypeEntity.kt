@@ -18,4 +18,4 @@ class NoteTypeEntity (
          * Note type name.
          */
         val type: String
-) : BaseEntity<Long>()
+) : BaseEntity()

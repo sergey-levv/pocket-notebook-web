@@ -34,4 +34,4 @@ class CredentialEntity (
          */
         @Column(name = "deactivation_date", nullable = true)
         val deactivationDate: Timestamp?
-) : BaseEntity<Long>()
+) : BaseEntity()

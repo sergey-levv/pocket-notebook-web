@@ -5,6 +5,7 @@ import by.liauko.siarhei.pn.repository.CredentialRepository
 import by.liauko.siarhei.pn.repository.entity.CredentialEntity
 import org.springframework.stereotype.Repository
 import java.sql.Timestamp
+import java.util.*
 import javax.transaction.Transactional
 
 
@@ -43,7 +44,7 @@ class HibernateCredentialRepository : BaseRepository(), CredentialRepository {
     override fun delete(credential: CredentialEntity) =
             entityManager.remove(credential)
 
-    override fun findById(id: Long): CredentialEntity? =
+    override fun findById(id: UUID): CredentialEntity? =
             entityManager.find(CredentialEntity::class.java, id)
 
     override fun findByEmail(email: String): CredentialEntity =
@@ -56,14 +57,14 @@ class HibernateCredentialRepository : BaseRepository(), CredentialRepository {
                     .setParameter(emailParameterName, email)
                     .singleResult > 0
 
-    override fun deactivateCredential(id: Long, time: Long) =
+    override fun deactivateCredential(id: UUID, time: Long) =
             entityManager.createQuery(updateIsActiveAndDeactivationDateValue)
                     .setParameter(valueParameterName, false)
                     .setParameter(dateParameterName, Timestamp(time))
                     .setParameter(idParameterName, id)
                     .executeUpdate()
 
-    override fun updatePassword(id: Long, password: String) =
+    override fun updatePassword(id: UUID, password: String) =
             entityManager.createQuery(updatePassword)
                     .setParameter(passwordParameterName, password)
                     .setParameter(idParameterName, id)

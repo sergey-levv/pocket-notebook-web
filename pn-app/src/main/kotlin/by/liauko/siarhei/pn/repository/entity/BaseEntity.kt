@@ -1,8 +1,9 @@
 package by.liauko.siarhei.pn.repository.entity
 
+import org.hibernate.annotations.GenericGenerator
 import org.springframework.data.util.ProxyUtils
+import java.util.*
 import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.MappedSuperclass
 
@@ -14,17 +15,18 @@ import javax.persistence.MappedSuperclass
  * @since 1.0.0
  */
 @MappedSuperclass
-abstract class BaseEntity<T> {
+abstract class BaseEntity {
 
     /**
-     * Entity unique identifier.
+     * Entity unique identifier in UUID format.
      *
      * @author Siarhei Liauko
      * @since 1.0.0
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: T? = null
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    var id: UUID? = null
 
     override fun equals(other: Any?): Boolean {
         other ?: return false
@@ -33,7 +35,7 @@ abstract class BaseEntity<T> {
 
         if (javaClass != ProxyUtils.getUserClass(other)) return false
 
-        other as BaseEntity<*>
+        other as BaseEntity
 
         return this.id != null && this.id == other.id
     }

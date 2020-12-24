@@ -1,5 +1,7 @@
 package by.liauko.siarhei.pn.dto
 
+import java.util.*
+
 
 /**
  * Data transfer object containing data about user's account
@@ -11,7 +13,7 @@ data class Account(
         /**
          * User credentials unique identifier.
          */
-        val id: Long,
+        val id: UUID,
         /**
          * User's email which used as username.
          */

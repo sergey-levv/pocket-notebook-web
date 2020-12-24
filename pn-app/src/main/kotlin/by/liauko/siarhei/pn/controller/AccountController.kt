@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.*
 
 
 @RestController
@@ -24,7 +25,7 @@ class AccountController {
     private lateinit var accountService: AccountService
 
     @PostMapping("/signup")
-    fun signup(@RequestBody accountDetails: Credential): Long? {
+    fun signup(@RequestBody accountDetails: Credential): UUID? {
         try {
             return accountService.createAccount(accountDetails)
         } catch (e: AccountAlreadyExistsException) {
@@ -33,7 +34,7 @@ class AccountController {
     }
 
     @PutMapping("/{id}/deactivate")
-    fun deactivate(@PathVariable id: Long) {
+    fun deactivate(@PathVariable id: UUID) {
         try {
             accountService.deactivateAccount(id)
         } catch (e: AccountNotFoundException) {
