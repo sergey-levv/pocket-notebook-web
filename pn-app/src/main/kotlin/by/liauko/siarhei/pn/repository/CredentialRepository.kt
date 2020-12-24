@@ -16,7 +16,7 @@ interface CredentialRepository {
      * Saves user credentials to database. [CredentialEntity.password] value is PBKDF2 function result
      * which length is 80 characters.
      *
-     * @param credential - [CredentialEntity] instance which stored user email and password.
+     * @param credential [CredentialEntity] instance which stored user email and password.
      *
      * @author Siarhei Liauko
      * @since 1.0.0
@@ -26,7 +26,7 @@ interface CredentialRepository {
     /**
      * Updates user credentials.
      *
-     * @param credential - [CredentialEntity] which contains updated user credentials information.
+     * @param credential [CredentialEntity] which contains updated user credentials information.
      *
      * @return [CredentialEntity] instance.
      *
@@ -38,7 +38,7 @@ interface CredentialRepository {
     /**
      * Removes user credentials from database.
      *
-     * @param credential - user credentials which will be deleted.
+     * @param credential user credentials which will be deleted.
      *
      * @author Siarhei Liauko
      * @since 1.0.0
@@ -48,19 +48,19 @@ interface CredentialRepository {
     /**
      * Finds user credentials by it ID in database.
      *
-     * @param id - credentials unique identifier.
+     * @param id credentials unique identifier.
      *
      * @return [CredentialEntity] related to ID.
      *
      * @author Siarhei Liauko
      * @since 1.0.0
      */
-    fun findById(id: Long): CredentialEntity
+    fun findById(id: Long): CredentialEntity?
 
     /**
      * Finds user credentials by it email in database.
      *
-     * @param email - user's email identifying the credentials which data is returned.
+     * @param email user's email identifying the credentials which data is returned.
      *
      * @return [CredentialEntity] related to email.
      *
@@ -72,7 +72,7 @@ interface CredentialRepository {
     /**
      * Checks if certain email already exists in database.
      *
-     * @param email - the email address which comparing with data in database.
+     * @param email the email address which comparing with data in database.
      *
      * @return true if such email exists in database, otherwise false.
      *
@@ -84,34 +84,26 @@ interface CredentialRepository {
     /**
      * Update user's credentials status to deactivated.
      *
-     * @param id - unique identifier determining user's credentials which will be deactivated.
-     * @param time - date and time when credential was deactivated in milliseconds.
+     * @param id unique identifier determining user's credentials which will be deactivated.
+     * @param time date and time when credential was deactivated in milliseconds.
+     *
+     * @return number updated rows.
      *
      * @author Siarhei Liauko
      * @since 1.0.0
      */
-    fun deactivateCredential(id: Long, time: Long)
+    fun deactivateCredential(id: Long, time: Long): Int
 
     /**
-     * Returns password related to specified ID.
+     * Updates user's password in database.
      *
-     * @param id - unique identifier of user's credential.
+     * @param id unique identifier determining user's credentials which password will be updated.
+     * @param password new user's password value.
      *
-     * @return user's password.
-     *
-     * @author Siarhei Liauko
-     * @since 1.0.0
-     */
-    fun findPasswordById(id: Long): String
-
-    /**
-     * Updated user's password in database.
-     *
-     * @param id - unique identifier determining user's credentials which password will be updated.
-     * @param password - new user's password value.
+     * @return number updated rows.
      *
      * @author Siarhei Liauko
      * @since 1.0.0
      */
-    fun updatePassword(id: Long, password: String)
+    fun updatePassword(id: Long, password: String): Int
 }

@@ -2,12 +2,13 @@ package by.liauko.siarhei.pn.service.impl
 
 import by.liauko.siarhei.pn.dto.Account
 import by.liauko.siarhei.pn.dto.Credential
-import by.liauko.siarhei.pn.dto.NewPassword
+import by.liauko.siarhei.pn.dto.Password
 import by.liauko.siarhei.pn.repository.CredentialRepository
 import by.liauko.siarhei.pn.repository.entity.CredentialEntity
 import by.liauko.siarhei.pn.service.AccountService
 import by.liauko.siarhei.pn.service.exception.AccountAlreadyExistsException
-import by.liauko.siarhei.pn.service.exception.CredentialsVerificationException
+import by.liauko.siarhei.pn.service.exception.AccountNotActiveException
+import by.liauko.siarhei.pn.service.exception.AccountNotFoundException
 import org.apache.logging.log4j.LogManager
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.User
@@ -57,34 +58,22 @@ class AccountServiceImpl : AccountService {
         }
     }
 
-    override fun getAccountDetails(username: String) =
-            toDto(credentialRepository.findByEmail(username))
-
-    override fun updatePassword(newPassword: NewPassword) {
-        if (!checkPassword(newPassword.id, newPassword.oldPassword)) {
-            log.warn("Unsuccessful current password verification.")
-            throw CredentialsVerificationException("Unsuccessful current password verification.")
-        }
-
-        credentialRepository.updatePassword(newPassword.id, newPassword.newPassword)
+    override fun getAccountDetails(username: String): Account {
+        val entity = credentialRepository.findByEmail(username)
+        return Account(entity.id!!, entity.email, entity.password, entity.isActive)
     }
 
-    override fun deactivateAccount(account: Account) {
-        if (!checkPassword(account.id, account.password)) {
-            log.warn("Unsuccessful password verification.")
-            throw CredentialsVerificationException("Unsuccessful password verification.")
+    override fun updatePassword(password: Password) {
+        if (credentialRepository.updatePassword(password.id, passwordEncoder.encode(password.password)) == 0) {
+            log.warn("Account with id ${password.id} does not exists.")
+            throw AccountNotFoundException("Account with id ${password.id} does not exists.")
         }
-
-        credentialRepository.deactivateCredential(account.id, System.currentTimeMillis())
     }
 
-    private fun toDto(entity: CredentialEntity): Account =
-            Account(entity.id!!, entity.email, entity.password, entity.isActive)
-
-    private fun checkPassword(id: Long, password: String): Boolean {
-        val expectedPassword = credentialRepository.findPasswordById(id)
-        val actualPassword = passwordEncoder.encode(password)
-
-        return expectedPassword == actualPassword
+    override fun deactivateAccount(id: Long) {
+        if (credentialRepository.deactivateCredential(id, System.currentTimeMillis()) == 0) {
+            log.warn("Account with id $id does not exists.")
+            throw AccountNotFoundException("Account with id $id does not exists.")
+        }
     }
 }

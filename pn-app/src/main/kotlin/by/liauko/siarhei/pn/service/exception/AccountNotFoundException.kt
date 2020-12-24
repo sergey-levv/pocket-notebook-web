@@ -2,12 +2,12 @@ package by.liauko.siarhei.pn.service.exception
 
 
 /**
- * Exception class intended for notifying controller layer, that username or password is wrong.
+ * Exception class intended for notifying controller layer, that account was not found in database.
  *
  * @author Siarhei Liauko
  * @since 1.0.0
  */
-class CredentialsVerificationException : RuntimeException {
+class AccountNotFoundException: RuntimeException {
 
     constructor(): super()
     constructor(message: String): super(message)

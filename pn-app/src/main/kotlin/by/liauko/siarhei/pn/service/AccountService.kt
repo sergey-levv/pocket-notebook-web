@@ -2,7 +2,7 @@ package by.liauko.siarhei.pn.service
 
 import by.liauko.siarhei.pn.dto.Account
 import by.liauko.siarhei.pn.dto.Credential
-import by.liauko.siarhei.pn.dto.NewPassword
+import by.liauko.siarhei.pn.dto.Password
 import org.springframework.security.core.userdetails.UserDetailsService
 
 
@@ -18,7 +18,7 @@ interface AccountService : UserDetailsService {
     /**
      * Save user's credentials.
      *
-     * @param credential - [Credential] instance containing account username and password.
+     * @param credential [Credential] instance containing account username and password.
      *
      * @author Siarhei Liauko
      * @since 1.0.0
@@ -28,7 +28,7 @@ interface AccountService : UserDetailsService {
     /**
      * Return account details by username related to it.
      *
-     * @param username - user's email which identifier user's accoutn.
+     * @param username user's email which identifier user's accoutn.
      *
      * @return [Account] instance containing data about user profile.
      *
@@ -38,23 +38,22 @@ interface AccountService : UserDetailsService {
     fun getAccountDetails(username: String): Account
 
     /**
-     * Updating user's password after verification.
+     * Updating user's password.
      *
-     * @param newPassword - [NewPassword] instance containing account ID,
-     * old password for verification and new password.
+     * @param password [Password] instance containing account ID, and new password.
      *
      * @author Siarhei Liauko
      * @since 1.0.0
      */
-    fun updatePassword(newPassword: NewPassword)
+    fun updatePassword(password: Password)
 
     /**
      * Deactivates user's account when user want remove their account from application.
      *
-     * @param account - user's account which should be deactivated and contains user's id and password to verification.
+     * @param id unique identifier related to user's account to be deactivated.
      *
      * @author Siarhei Liauko
      * @since 1.0.0
      */
-    fun deactivateAccount(account: Account)
+    fun deactivateAccount(id: Long)
 }

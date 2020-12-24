@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
  * @since 1.0.0
  */
 @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-class IncorrectCredentialsException : RuntimeException {
+class IncorrectDataException : RuntimeException {
 
     constructor(): super()
     constructor(message: String): super(message)
